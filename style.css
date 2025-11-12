@@ -15,13 +15,15 @@ html, body {
 
 /* --- Fondo principal --- */
 .background {
-  background-image: url('fondo-texto.JPG'); /* Imagen horizontal */
-  background-size: contain;
+  background-image: url('fondo-texto.JPG');
+  background-size: contain; /* mantiene proporciones */
   background-repeat: no-repeat;
   background-position: center;
-  height: 100vh;
-  width: 100vw;
-
+  background-color: #000;
+  
+  width: 100%;
+  height: 100dvh; /* usa "dvh" en lugar de "vh" → mejor en móviles */
+  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,7 +31,6 @@ html, body {
   opacity: 0;
   animation: fadeIn 1.8s ease-in-out forwards;
 }
-
 /* --- Texto superpuesto --- */
 .overlay-text {
   position: absolute;
@@ -43,16 +44,17 @@ html, body {
   animation: fadeText 2s ease-in-out 0.8s forwards;
 }
 
-/* --- Adaptación móvil --- */
+/* --- Versión móvil --- */
 @media (max-width: 768px) {
   .background {
-    background-image: url('fondo-vertical.png'); /* Imagen vertical */
+    background-image: url('fondo-vertical.png');
     background-size: contain;
-    background-position: center;
+    background-position: center center;
+    height: 100dvh; /* corrige el recorte inferior en móviles */
   }
 
   .overlay-text {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     bottom: 5%;
   }
 }
