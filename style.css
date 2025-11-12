@@ -81,6 +81,7 @@ html, body {
   20% {
     opacity: 1;
     transform: translateY(0);
+    
   }
   80% {
     opacity: 1;
