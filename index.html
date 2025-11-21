@@ -11,21 +11,16 @@
 
   <!-- Selector de idioma -->
   <div class="lang-switch">
-    <div class="lang-toggle">
+    <div class="lang-toggle es">
       <div class="toggle-indicator"></div>
 
-      <button id="btn-es" class="lang-option active" data-lang="es">
-        ESP
-      </button>
-
-      <button id="btn-en" class="lang-option" data-lang="en">
-        ENG
-      </button>
+      <button id="btn-es" class="lang-option active" data-lang="es">ESP</button>
+      <button id="btn-en" class="lang-option" data-lang="en">ENG</button>
     </div>
   </div>
 
-  <!-- Imagen de fondo -->
-  <img id="imgFondo" class="fondo" src="img/fondo-texto.jpg" alt="Fondo" />
+  <!-- Imagen de fondo (NOW as background) -->
+  <div id="imgFondo" class="fondo"></div>
 
   <!-- Texto overlay -->
   <div id="overlayText" class="overlay-text">Sitio en construcción</div>
@@ -39,7 +34,10 @@ function isMobile() {
 /* --- Cargar imagen inicial --- */
 function setInitialImage() {
   const fondo = document.getElementById("imgFondo");
-  fondo.src = isMobile() ? "img/fondo-vertical.png" : "img/fondo-texto.jpg";
+  fondo.style.backgroundImage =
+    isMobile()
+      ? 'url("img/fondo-vertical.png")'
+      : 'url("img/fondo-texto.jpg")';
 }
 
 /* --- Cambiar idioma / texto / imagen --- */
@@ -55,52 +53,44 @@ function setLanguage(lang) {
 
     if (lang === "es") {
       overlay.textContent = "Sitio en construcción";
-      fondo.src = mobile ? "img/fondo-vertical.png" : "img/fondo-texto.jpg";
+      fondo.style.backgroundImage =
+        mobile
+          ? 'url("img/fondo-vertical.png")'
+          : 'url("img/fondo-texto.jpg")';
+
     } else {
       overlay.textContent = "Coming soon";
-      fondo.src = mobile ? "img/fondo-ingles-vertical.png" : "img/fondo-ingles.jpg";
+      fondo.style.backgroundImage =
+        mobile
+          ? 'url("img/fondo-ingles-vertical.png")'
+          : 'url("img/fondo-ingles.jpg")';
     }
-
-    overlay.style.animation = "none";
-    void overlay.offsetWidth;
-    overlay.style.animation = "";
 
     overlay.style.opacity = 1;
     fondo.style.opacity = 1;
-  }, 200);
+  }, 150);
 }
 
 /* --- Toggle de botones --- */
 const btnEs = document.getElementById("btn-es");
 const btnEn = document.getElementById("btn-en");
 const indicator = document.querySelector(".toggle-indicator");
+const toggle = document.querySelector(".lang-toggle");
 
-/* 
-   ⭐ Versión definitiva pixel-perfect
-   Alínea el indicador exactamente debajo del botón ENG 
-*/
 function switchLang(lang) {
-  const toggle = document.querySelector(".lang-toggle");
-
-  // Rectángulos absolutos del contenedor y botón ENG
-  const toggleRect = toggle.getBoundingClientRect();
-  const engRect = btnEn.getBoundingClientRect();
-
-  // Distancia exacta hacia el botón ENG
-  const moveToEng = engRect.left - toggleRect.left;
 
   if (lang === "es") {
+    toggle.classList.remove("eng");
+    toggle.classList.add("es");
     btnEs.classList.add("active");
     btnEn.classList.remove("active");
-
-    indicator.style.transform = `translateX(0px)`;
     setLanguage("es");
 
   } else {
+    toggle.classList.remove("es");
+    toggle.classList.add("eng");
     btnEs.classList.remove("active");
     btnEn.classList.add("active");
-
-    indicator.style.transform = `translateX(${moveToEng}px)`;
     setLanguage("en");
   }
 }
@@ -115,9 +105,14 @@ window.onresize = () => {
   const fondo = document.getElementById("imgFondo");
   const isEng = document.getElementById("overlayText").textContent === "Coming soon";
 
-  fondo.src = isEng
-    ? (isMobile() ? "img/fondo-ingles-vertical.png" : "img/fondo-ingles.jpg")
-    : (isMobile() ? "img/fondo-vertical.png" : "img/fondo-texto.jpg");
+  fondo.style.backgroundImage =
+    isEng
+      ? (isMobile()
+          ? 'url("img/fondo-ingles-vertical.png")'
+          : 'url("img/fondo-ingles.jpg")')
+      : (isMobile()
+          ? 'url("img/fondo-vertical.png")'
+          : 'url("img/fondo-texto.jpg")');
 };
 </script>
 

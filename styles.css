@@ -5,24 +5,22 @@ body, html {
   overflow: hidden;
 }
 
-/* Imagen de fondo */
+/* Imagen de fondo — ahora SIEMPRE CENTRADA */
 .fondo {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 
-  object-fit: contain;
-  object-position: center center;  /* ← SOLUCIÓN */
-
+  background-size: contain;        /* LA CLAVE */
+  background-repeat: no-repeat;
+  background-position: center;     /* LA CLAVE */
   background-color: black;
-  z-index: -1;
 
+  z-index: -1;
   transition: opacity 0.3s ease;
   animation: fadeIn 1.2s ease forwards;
 }
-
 
 /* Texto overlay */
 .overlay-text {
@@ -37,13 +35,13 @@ body, html {
   animation: fadeText 3s ease-in-out forwards;
 }
 
-/* --- Colores del nuevo estilo --- */
+/* --- Colores y estilo del toggle --- */
 :root {
   --pill-bg: rgba(0,0,0,0.35);
-  --pill-border: rgba(18, 186, 228, 0.856);   /* borde visible pero sutil */
-  --indicator-bg: rgba(18,186,228,0.856);  /* el activo ya NO es blanco */
+  --pill-border: rgba(18, 186, 228, 0.856);
+  --indicator-bg: rgba(18,186,228,0.856);
   --inactive-text: white;
-  --active-text: white;                    /* texto no cambia, más elegante */
+  --active-text: white;
 }
 
 /* Contenedor */
@@ -60,23 +58,22 @@ body, html {
   display: flex;
   width: 120px;
   background: var(--pill-bg);
-  border: 2px solid var(--pill-border); /* borde más marcado */
+  border: 2px solid var(--pill-border);
   backdrop-filter: blur(6px);
   border-radius: 30px;
   padding: 4px;
 }
 
-/* Indicador deslizante */
+/* Indicador */
 .toggle-indicator {
   position: absolute;
-  top: 4px;
-  left: 4px;
   width: 56px;
   height: calc(100% - 8px);
-  background: var(--indicator-bg);   /* ya no es blanco */
+  background: var(--indicator-bg);
   border-radius: 22px;
-  transition: 0.28s ease;
-  z-index: 0;
+  transition: transform 0.28s ease;
+  left: 4px;
+  top: 4px;
 }
 
 /* Botones */
@@ -90,7 +87,6 @@ body, html {
   font-weight: 600;
   cursor: pointer;
   color: var(--inactive-text);
-  transition: 0.25s ease;
 }
 
 /* Activo */
@@ -98,45 +94,14 @@ body, html {
   color: var(--active-text);
 }
 
-/* Hover */
-.lang-option:not(.active):hover {
-  opacity: 0.9;
-}
-
-/* --- FIX DE ESPACIO SIMÉTRICO --- */
-
-/* Forzamos que el pill sea EXACTAMENTE la suma de los dos botones */
-.lang-toggle {
-  width: 120px;        /* 56 + 56 + paddings → perfecto */
-  padding: 4px;
-}
-
-/* El botón */
-.lang-option {
-  width: 56px;         /* ambos iguales → simetría */
-  text-align: center;  /* centra perfectamente el texto */
-}
-
-/* El indicador deslizante */
-.toggle-indicator {
-  width: 56px;
-  height: calc(100% - 8px);
-  left: 4px;
-  top: 4px;
-  transition: 0.28s ease;
-}
-
-
-/* Cuando está en modo inglés, movelo EXACTO a la derecha */
-.lang-toggle.eng .toggle-indicator {
-  transform: translateX(56px);   /* EXACTAMENTE un botón a la derecha */
-}
-
-/* Cuando está en modo español */
+/* Toggle ES / ENG */
 .lang-toggle.es .toggle-indicator {
   transform: translateX(0);
 }
 
+.lang-toggle.eng .toggle-indicator {
+  transform: translateX(56px);
+}
 
 /* Animaciones */
 @keyframes fadeIn {
