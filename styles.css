@@ -12,12 +12,17 @@ body, html {
   left: 0;
   width: 100vw;
   height: 100vh;
+
   object-fit: contain;
+  object-position: center center;  /* ← SOLUCIÓN */
+
   background-color: black;
   z-index: -1;
+
   transition: opacity 0.3s ease;
   animation: fadeIn 1.2s ease forwards;
 }
+
 
 /* Texto overlay */
 .overlay-text {
