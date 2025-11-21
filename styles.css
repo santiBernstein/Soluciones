@@ -30,8 +30,7 @@ body, html {
   text-align: center;
   font-size: 3rem;
   font-weight: bold;
-  color: rgb(226, 14, 14);
-  text-shadow: 3px 3px 8px rgba(245, 14, 14, 0.9);
+  color: rgba(9, 31, 226, 0.822);
   animation: fadeText 3s ease-in-out forwards;
 }
 
